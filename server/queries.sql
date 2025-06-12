@@ -1,0 +1,26 @@
+CREATE TABLE IF NOT EXISTS status (
+  id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+  status TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS games (
+  id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+  title TEXT NOT NULL,
+  platform TEXT NOT NULL,
+  year INT,
+  comments TEXT,
+  status_id INTEGER REFERENCES status(id),
+  completed DATE
+);
+
+CREATE TABLE IF NOT EXISTS genres (
+  id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+  name TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS games_genres (
+  game_id INTEGER REFERENCES games(id),
+  genre_id INTEGER REFERENCES genres(id),
+  PRIMARY KEY (game_id,genre_id)
+);
+

@@ -5,12 +5,13 @@ export default function Scrap() {
   const [formValues, setFormValues] = useState({
     title: "",
     platform: "",
-    genres: [],
     year: "",
     comments: "",
     status: "",
     completed: undefined,
   });
+
+  const [genreValues, setGenreValues] = useState([]);
 
   const [statusArr, setStatusArr] = useState([]);
   useEffect(() => {
@@ -41,10 +42,21 @@ export default function Scrap() {
   function handleSubmit(e) {
     e.preventDefault();
     console.log(formValues);
+    console.log(genreValues);
   }
   function handleChange(e) {
     setFormValues({ ...formValues, [e.target.name]: e.target.value });
-    console.log(formValues);
+  }
+
+  function handleChangeGenres(e) {
+    // thank you Tim for this function!
+    const temp = [];
+    for (const item of e.target) {
+      if (item.selected) {
+        temp.push(item.value);
+      }
+    }
+    setGenreValues(temp);
   }
 
   return (
@@ -84,13 +96,15 @@ export default function Scrap() {
             <select
               id="genres"
               name="genres"
-              value={formValues.genres}
-              onChange={handleChange}
-              isMulti
+              defaultValue={genreValues} //default value not value is super important don't forget
+              onChange={handleChangeGenres}
+              multiple
             >
               <option hidden>Select...</option>
               {genreArr.map((genre) => (
-                <option key={genre.id}>{genre.name}</option>
+                <option key={genre.id} value={genre.id}>
+                  {genre.name}
+                </option>
               ))}
             </select>
           ) : null}

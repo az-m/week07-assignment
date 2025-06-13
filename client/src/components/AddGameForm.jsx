@@ -1,36 +1,14 @@
-import { useState, useEffect } from "react";
-// import AddGameForm from "./AddGameForm";
+import { useState } from "react";
 
-export default function Scrap() {
-  const [formValues, setFormValues] = useState({
-    title: "",
-    platform: "",
-    year: "",
-    comments: "",
-    status: "",
-    completed: undefined,
-  });
-
-  const [statusArr, setStatusArr] = useState([]);
-  useEffect(() => {
-    async function fetchData() {
-      const response = await fetch(
-        import.meta.env.VITE_API_ROOT + "/getStatusList"
-      );
-      // id, status
-      const data = await response.json();
-      setStatusArr(data);
-    }
-    fetchData();
-  }, []);
-
-  function handleSubmit(e) {
-    e.preventDefault();
-    console.log(formValues);
-  }
-  function handleChange(e) {
-    setFormValues({ ...formValues, [e.target.name]: e.target.value });
-  }
+export default function AddGameForm(
+  statusArr,
+  formValuesProp,
+  handleSubmit,
+  handleChange
+) {
+  const [formValues, setFormValues] = useState({});
+  setFormValues(formValuesProp);
+  console.log(statusArr);
 
   return (
     <>
@@ -66,8 +44,7 @@ export default function Scrap() {
           </select>
           <label htmlFor="year">Release year (yyyy)</label>
           <input
-            type="text"
-            maxLength={4}
+            type="number"
             id="year"
             name="year"
             value={formValues.year}
@@ -94,7 +71,9 @@ export default function Scrap() {
               <option>{statusArr[1].status}</option>
               <option>{statusArr[2].status}</option>
             </select>
-          ) : null}
+          ) : (
+            <span>NOT HERE</span>
+          )}
           <label htmlFor="completed">Completed date</label>
           <input
             type="date"

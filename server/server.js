@@ -28,6 +28,15 @@ app.get("/getGames", async (req, res) => {
   }
 });
 
+app.get("/getStatusList", async (req, res) => {
+  try {
+    const data = await db.query(`SELECT status.id, status.status FROM status`);
+    res.json(data.rows);
+  } catch {
+    res.sendStatus;
+  }
+});
+
 app.post("", (req, res) => {
   const {} = req.body;
   try {

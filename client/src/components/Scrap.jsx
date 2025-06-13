@@ -1,14 +1,16 @@
 import { useState, useEffect } from "react";
 // import AddGameForm from "./AddGameForm";
 
+const APIroot = import.meta.env.VITE_API_ROOT;
+
 export default function Scrap() {
   const [formValues, setFormValues] = useState({
     title: "",
     platform: "",
     year: "",
     comments: "",
-    status: "",
-    completed: undefined,
+    status: null,
+    completed: null,
   });
 
   const [genreValues, setGenreValues] = useState([]);
@@ -16,9 +18,7 @@ export default function Scrap() {
   const [statusArr, setStatusArr] = useState([]);
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch(
-        import.meta.env.VITE_API_ROOT + "/getStatusList"
-      );
+      const response = await fetch(APIroot + "/getStatusList");
       // id, status
       const data = await response.json();
       setStatusArr(data);
@@ -29,9 +29,7 @@ export default function Scrap() {
   const [genreArr, setGenreArr] = useState([]);
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch(
-        import.meta.env.VITE_API_ROOT + "/getGenreList"
-      );
+      const response = await fetch(APIroot + "/getGenreList");
       // id, name
       const data = await response.json();
       setGenreArr(data);
@@ -41,8 +39,16 @@ export default function Scrap() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(formValues);
-    console.log(genreValues);
+
+    formValues.status = parseInt(formValues.status);
+
+    fetch(APIroot + "/newGameRecord", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formValues),
+    });
   }
   function handleChange(e) {
     setFormValues({ ...formValues, [e.target.name]: e.target.value });
@@ -135,7 +141,9 @@ export default function Scrap() {
             >
               <option hidden>Select...</option>
               {statusArr.map((status) => (
-                <option key={status.id}>{status.status}</option>
+                <option key={status.id} value={status.id}>
+                  {status.status}
+                </option>
               ))}
             </select>
           ) : null}
@@ -144,7 +152,6 @@ export default function Scrap() {
             type="date"
             id="completed"
             name="completed"
-            value={formValues.completed}
             onChange={handleChange}
           />
 

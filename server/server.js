@@ -28,6 +28,13 @@ app.get("/getGames", async (req, res) => {
   }
 });
 
+app.get("/getMostRecentGameId", async (req, res) => {
+  const data = await db.query(
+    `SELECT games.id FROM games ORDER BY games.id DESC LIMIT 1`
+  );
+  res.json(data.rows);
+});
+
 app.get("/getStatusList", async (req, res) => {
   try {
     const data = await db.query(`SELECT status.id, status.status FROM status`);
@@ -46,10 +53,13 @@ app.get("/getGenreList", async (req, res) => {
   }
 });
 
-app.post("", (req, res) => {
-  const {} = req.body;
+app.post("/newGameRecord", (req, res) => {
+  const { title, platform, year, comments, status, completed } = req.body;
   try {
-    db.query(``, []);
+    db.query(
+      `INSERT INTO games (title, platform, year, comments, status_id, completed) VALUES ($1,$2,$3,$4,$5,$6)`,
+      [title, platform, year, comments, status, completed]
+    );
     res.status(200).json({ success: true });
   } catch {
     res.sendStatus;

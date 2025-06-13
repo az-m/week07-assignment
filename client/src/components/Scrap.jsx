@@ -5,6 +5,7 @@ export default function Scrap() {
   const [formValues, setFormValues] = useState({
     title: "",
     platform: "",
+    genres: [],
     year: "",
     comments: "",
     status: "",
@@ -24,12 +25,26 @@ export default function Scrap() {
     fetchData();
   }, []);
 
+  const [genreArr, setGenreArr] = useState([]);
+  useEffect(() => {
+    async function fetchData() {
+      const response = await fetch(
+        import.meta.env.VITE_API_ROOT + "/getGenreList"
+      );
+      // id, name
+      const data = await response.json();
+      setGenreArr(data);
+    }
+    fetchData();
+  }, []);
+
   function handleSubmit(e) {
     e.preventDefault();
     console.log(formValues);
   }
   function handleChange(e) {
     setFormValues({ ...formValues, [e.target.name]: e.target.value });
+    console.log(formValues);
   }
 
   return (
@@ -64,6 +79,21 @@ export default function Scrap() {
             <option>Blizzard</option>
             <option>DVD</option>
           </select>
+          <label htmlFor="genres">Genres</label>
+          {genreArr[0] ? (
+            <select
+              id="genres"
+              name="genres"
+              value={formValues.genres}
+              onChange={handleChange}
+              isMulti
+            >
+              <option hidden>Select...</option>
+              {genreArr.map((genre) => (
+                <option key={genre.id}>{genre.name}</option>
+              ))}
+            </select>
+          ) : null}
           <label htmlFor="year">Release year (yyyy)</label>
           <input
             type="text"
@@ -90,9 +120,9 @@ export default function Scrap() {
               onChange={handleChange}
             >
               <option hidden>Select...</option>
-              <option>{statusArr[0].status}</option>
-              <option>{statusArr[1].status}</option>
-              <option>{statusArr[2].status}</option>
+              {statusArr.map((status) => (
+                <option key={status.id}>{status.status}</option>
+              ))}
             </select>
           ) : null}
           <label htmlFor="completed">Completed date</label>

@@ -37,6 +37,15 @@ app.get("/getStatusList", async (req, res) => {
   }
 });
 
+app.get("/getGenreList", async (req, res) => {
+  try {
+    const data = await db.query(`SELECT genres.id, genres.name FROM genres`);
+    res.json(data.rows);
+  } catch {
+    res.sendStatus;
+  }
+});
+
 app.post("", (req, res) => {
   const {} = req.body;
   try {

@@ -66,6 +66,19 @@ app.post("/newGameRecord", (req, res) => {
   }
 });
 
+app.post("/newGamesGenresRecord", (req, res) => {
+  const { gameid, genreid } = req.body;
+  try {
+    db.query(`INSERT INTO games_genres (game_id, genre_id) VALUES ($1,$2)`, [
+      gameid,
+      genreid,
+    ]);
+    res.status(200).json({ success: true });
+  } catch {
+    res.sendStatus;
+  }
+});
+
 app.delete("", (req, res) => {
   const recordId = req.params.id;
   try {

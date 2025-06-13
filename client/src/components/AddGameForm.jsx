@@ -1,18 +1,92 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-export default function AddGameForm(
-  statusArr,
-  formValuesProp,
-  handleSubmit,
-  handleChange
-) {
-  const [formValues, setFormValues] = useState({});
-  setFormValues(formValuesProp);
-  console.log(statusArr);
+const APIroot = import.meta.env.VITE_API_ROOT;
+
+export default function AddGameForm() {
+  const [formValues, setFormValues] = useState({
+    title: "",
+    platform: "Steam",
+    year: "",
+    comments: "",
+    status: 2,
+    completed: null,
+  });
+  const [genreValues, setGenreValues] = useState([]);
+
+  const [statusArr, setStatusArr] = useState([]);
+  useEffect(() => {
+    async function fetchData() {
+      const response = await fetch(APIroot + "/getStatusList");
+      // id, status
+      const data = await response.json();
+      setStatusArr(data);
+    }
+    fetchData();
+  }, []);
+
+  const [genreArr, setGenreArr] = useState([]);
+  useEffect(() => {
+    async function fetchData() {
+      const response = await fetch(APIroot + "/getGenreList");
+      // id, name
+      const data = await response.json();
+      setGenreArr(data);
+    }
+    fetchData();
+  }, []);
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    formValues.status = parseInt(formValues.status);
+
+    const response = await fetch(APIroot + "/newGameRecord", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formValues),
+    });
+
+    console.log(JSON.stringify(formValues));
+
+    if (response.status === 200) {
+      const getLast = await fetch(APIroot + "/getMostRecentGameId");
+      const lastID = await getLast.json();
+
+      let gameGenreData = new Object();
+      for (let value of genreValues) {
+        gameGenreData.gameid = parseInt(lastID[0].id);
+        gameGenreData.genreid = parseInt(value);
+
+        fetch(APIroot + "/newGamesGenresRecord", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(gameGenreData),
+        });
+      }
+    }
+  }
+
+  function handleChange(e) {
+    setFormValues({ ...formValues, [e.target.name]: e.target.value });
+  }
+
+  function handleChangeGenres(e) {
+    // thank you Tim for this function!
+    const temp = [];
+    for (const item of e.target) {
+      if (item.selected) {
+        temp.push(item.value);
+      }
+    }
+    setGenreValues(temp);
+  }
 
   return (
     <>
-      <h2>scrap</h2>
       <form onSubmit={handleSubmit}>
         <fieldset>
           <label htmlFor="title">Title</label>
@@ -22,16 +96,11 @@ export default function AddGameForm(
             name="title"
             value={formValues.title}
             onChange={handleChange}
+            placeholder="required"
             required
           />
           <label htmlFor="platform">Platform/Store</label>
-          <select
-            id="platform"
-            name="platform"
-            value={formValues.platform}
-            onChange={handleChange}
-          >
-            <option hidden>Select...</option>
+          <select id="platform" name="platform" onChange={handleChange}>
             <option>Steam</option>
             <option>EPIC</option>
             <option>Amazon</option>
@@ -42,9 +111,27 @@ export default function AddGameForm(
             <option>Blizzard</option>
             <option>DVD</option>
           </select>
+          <label htmlFor="genres">Genres</label>
+          {genreArr[0] ? (
+            <select
+              id="genres"
+              name="genres"
+              defaultValue={genreValues} //default value not value is super important don't forget
+              onChange={handleChangeGenres}
+              multiple
+            >
+              <option hidden>Select...</option>
+              {genreArr.map((genre) => (
+                <option key={genre.id} value={genre.id}>
+                  {genre.name}
+                </option>
+              ))}
+            </select>
+          ) : null}
           <label htmlFor="year">Release year (yyyy)</label>
           <input
-            type="number"
+            type="text"
+            maxLength={4}
             id="year"
             name="year"
             value={formValues.year}
@@ -63,23 +150,22 @@ export default function AddGameForm(
             <select
               id="status"
               name="status"
-              value={formValues.status}
+              defaultValue="2"
               onChange={handleChange}
+              required
             >
-              <option hidden>Select...</option>
-              <option>{statusArr[0].status}</option>
-              <option>{statusArr[1].status}</option>
-              <option>{statusArr[2].status}</option>
+              {statusArr.map((status) => (
+                <option key={status.id} value={status.id}>
+                  {status.status}
+                </option>
+              ))}
             </select>
-          ) : (
-            <span>NOT HERE</span>
-          )}
+          ) : null}
           <label htmlFor="completed">Completed date</label>
           <input
             type="date"
             id="completed"
             name="completed"
-            value={formValues.completed}
             onChange={handleChange}
           />
 

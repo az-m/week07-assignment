@@ -1,51 +1,14 @@
-import { useState, useEffect } from "react";
-// import AddGameForm from "./AddGameForm";
+import { useState } from "react";
 
-export default function Scrap() {
-  const [formValues, setFormValues] = useState({
-    title: "",
-    platform: "",
-    genres: [],
-    year: "",
-    comments: "",
-    status: "",
-    completed: undefined,
-  });
-
-  const [statusArr, setStatusArr] = useState([]);
-  useEffect(() => {
-    async function fetchData() {
-      const response = await fetch(
-        import.meta.env.VITE_API_ROOT + "/getStatusList"
-      );
-      // id, status
-      const data = await response.json();
-      setStatusArr(data);
-    }
-    fetchData();
-  }, []);
-
-  const [genreArr, setGenreArr] = useState([]);
-  useEffect(() => {
-    async function fetchData() {
-      const response = await fetch(
-        import.meta.env.VITE_API_ROOT + "/getGenreList"
-      );
-      // id, name
-      const data = await response.json();
-      setGenreArr(data);
-    }
-    fetchData();
-  }, []);
-
-  function handleSubmit(e) {
-    e.preventDefault();
-    console.log(formValues);
-  }
-  function handleChange(e) {
-    setFormValues({ ...formValues, [e.target.name]: e.target.value });
-    console.log(formValues);
-  }
+export default function AddGameForm(
+  statusArr,
+  formValuesProp,
+  handleSubmit,
+  handleChange
+) {
+  const [formValues, setFormValues] = useState({});
+  setFormValues(formValuesProp);
+  console.log(statusArr);
 
   return (
     <>
@@ -79,25 +42,9 @@ export default function Scrap() {
             <option>Blizzard</option>
             <option>DVD</option>
           </select>
-          <label htmlFor="genres">Genres</label>
-          {genreArr[0] ? (
-            <select
-              id="genres"
-              name="genres"
-              value={formValues.genres}
-              onChange={handleChange}
-              isMulti
-            >
-              <option hidden>Select...</option>
-              {genreArr.map((genre) => (
-                <option key={genre.id}>{genre.name}</option>
-              ))}
-            </select>
-          ) : null}
           <label htmlFor="year">Release year (yyyy)</label>
           <input
-            type="text"
-            maxLength={4}
+            type="number"
             id="year"
             name="year"
             value={formValues.year}
@@ -120,11 +67,13 @@ export default function Scrap() {
               onChange={handleChange}
             >
               <option hidden>Select...</option>
-              {statusArr.map((status) => (
-                <option key={status.id}>{status.status}</option>
-              ))}
+              <option>{statusArr[0].status}</option>
+              <option>{statusArr[1].status}</option>
+              <option>{statusArr[2].status}</option>
             </select>
-          ) : null}
+          ) : (
+            <span>NOT HERE</span>
+          )}
           <label htmlFor="completed">Completed date</label>
           <input
             type="date"

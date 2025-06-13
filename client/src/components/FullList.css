@@ -1,0 +1,25 @@
+.fullListTitles,
+.listItem {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 2%;
+  padding: 2px 0 2px 0;
+  justify-content: start;
+  border-bottom: 1px solid black;
+}
+
+.fullListTitles {
+  font-weight: 600;
+}
+
+.fullListTitles span,
+.listItem span {
+  border-left: 1px solid black;
+  padding-left: 2%;
+}
+
+.fullListTitles span:first-of-type,
+.listItem span:first-of-type {
+  border-left: none;
+}

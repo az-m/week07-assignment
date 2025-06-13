@@ -16,9 +16,12 @@ app.get("/", function (req, res) {
   res.json({ message: "This is the root route of the API." });
 });
 
-app.get("", async (req, res) => {
+// standard endpoint to get all info sorted by title a-z
+app.get("/getGames", async (req, res) => {
   try {
-    const data = await db.query(``);
+    const data = await db.query(
+      `SELECT games.id, games.title, games.platform, games.year, games.comments, status.status, games.completed, ARRAY_AGG(genres.name) AS genres FROM games JOIN status ON games.status_id = status.id JOIN games_genres ON games.id = games_genres.game_id JOIN genres ON games_genres.genre_id = genres.id GROUP BY games.id, games.title, games.platform, games.year, games.comments, status.status, games.completed ORDER BY games.title ASC;`
+    );
     res.json(data.rows);
   } catch {
     res.sendStatus;

@@ -20,7 +20,20 @@ app.get("/", function (req, res) {
 app.get("/getGames", async (req, res) => {
   try {
     const data = await db.query(
-      `SELECT games.id, games.title, games.platform, games.year, games.comments, status.status, games.completed, ARRAY_AGG(genres.name) AS genres FROM games JOIN status ON games.status_id = status.id JOIN games_genres ON games.id = games_genres.game_id JOIN genres ON games_genres.genre_id = genres.id GROUP BY games.id, games.title, games.platform, games.year, games.comments, status.status, games.completed ORDER BY games.title ASC;`
+      `SELECT games.id, games.title, games.platform, games.year, games.comments, status.status, games.completed, ARRAY_AGG(genres.name) AS genres FROM games JOIN status ON games.status_id = status.id JOIN games_genres ON games.id = games_genres.game_id JOIN genres ON games_genres.genre_id = genres.id GROUP BY games.id, games.title, games.platform, games.year, games.comments, status.status, games.completed ORDER BY games.title ASC`
+    );
+    res.json(data.rows);
+  } catch {
+    res.sendStatus;
+  }
+});
+
+app.get("/getGamesLike", async (req, res) => {
+  const search = "%" + req.query.search + "%";
+  try {
+    const data = await db.query(
+      `SELECT games.id, games.title, games.comments, games.completed, status.status FROM games JOIN status ON games.status_id = status.id WHERE title LIKE $1 ORDER BY games.title ASC`,
+      [search]
     );
     res.json(data.rows);
   } catch {

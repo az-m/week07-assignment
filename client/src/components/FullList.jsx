@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import "./FullList.css";
 
+const APIroot = import.meta.env.VITE_API_ROOT;
+
 export default function FullList() {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch(import.meta.env.VITE_API_ROOT + "/getGames");
+      const response = await fetch(APIroot + "/getGames");
       // id, title, platform, year (int), comments, status, completed (date), genres (arr)
       const data = await response.json();
       setItems(data);

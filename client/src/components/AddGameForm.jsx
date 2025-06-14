@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import "./AddGameForm.css";
 
 const APIroot = import.meta.env.VITE_API_ROOT;
 
@@ -48,8 +49,6 @@ export default function AddGameForm() {
       body: JSON.stringify(formValues),
     });
 
-    console.log(JSON.stringify(formValues));
-
     if (response.status === 200) {
       const getLast = await fetch(APIroot + "/getMostRecentGameId");
       const lastID = await getLast.json();
@@ -67,6 +66,17 @@ export default function AddGameForm() {
           body: JSON.stringify(gameGenreData),
         });
       }
+
+      setFormValues({
+        title: "",
+        platform: "Steam",
+        year: "",
+        comments: "",
+        status: 2,
+        completed: null,
+      });
+
+      setGenreValues([]);
     }
   }
 

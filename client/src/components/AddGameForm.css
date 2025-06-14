@@ -1,0 +1,12 @@
+label,
+input,
+option {
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+
+fieldset {
+  display: flex;
+  flex-direction: column;
+  justify-self: center;
+  width: 80%;
+}

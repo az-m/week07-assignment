@@ -18,9 +18,10 @@ app.get("/", function (req, res) {
 
 // standard endpoint to get all info sorted by title a-z
 app.get("/getGames", async (req, res) => {
+  const order = req.query.sortOrder;
   try {
     const data = await db.query(
-      `SELECT games.id, games.title, games.platform, games.year, games.comments, status.status, games.completed, ARRAY_AGG(genres.name) AS genres FROM games JOIN status ON games.status_id = status.id JOIN games_genres ON games.id = games_genres.game_id JOIN genres ON games_genres.genre_id = genres.id GROUP BY games.id, games.title, games.platform, games.year, games.comments, status.status, games.completed ORDER BY games.title ASC`
+      `SELECT games.id, games.title, games.platform, games.year, games.comments, status.status, games.completed, ARRAY_AGG(genres.name) AS genres FROM games JOIN status ON games.status_id = status.id JOIN games_genres ON games.id = games_genres.game_id JOIN genres ON games_genres.genre_id = genres.id GROUP BY games.id, games.title, games.platform, games.year, games.comments, status.status, games.completed ORDER BY games.title ${order}`
     );
     res.json(data.rows);
   } catch {

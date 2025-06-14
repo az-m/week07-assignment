@@ -92,23 +92,26 @@ app.post("/newGamesGenresRecord", (req, res) => {
   }
 });
 
-app.delete("", (req, res) => {
-  const recordId = req.params.id;
+app.put("/updateGameRecord/:id", (req, res) => {
+  const { comments, status, completed } = req.body;
+  const recordId = parseInt(req.params.id);
   try {
-    db.query(``, [recordId]);
+    db.query(
+      `UPDATE games SET comments = $1, status_id = $2, completed=$3 WHERE id = $4`,
+      [comments, status, completed, recordId]
+    );
     res.status(200).json({ success: true });
   } catch {
     res.sendStatus;
   }
 });
 
-app.put(":id", (req, res) => {
-  const body = req.body;
-  const recordId = req.params.id;
-  try {
-    db.query(``, [body.verified, recordId]);
-    res.status(200).json({ success: true });
-  } catch {
-    res.sendStatus;
-  }
-});
+// app.delete("", (req, res) => {
+//   const recordId = req.params.id;
+//   try {
+//     db.query(``, [recordId]);
+//     res.status(200).json({ success: true });
+//   } catch {
+//     res.sendStatus;
+//   }
+// });

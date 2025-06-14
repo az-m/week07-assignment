@@ -1,11 +1,12 @@
 import { useState } from "react";
-import Scrap from "./Scrap";
+import UpdateGameForm from "./UpdateGameForm";
 
 const APIroot = import.meta.env.VITE_API_ROOT;
 
 export default function SearchForm() {
   const [searchValues, setSearchValues] = useState({ title: "" });
   const [searchResults, setSearchResults] = useState([]);
+  const [updated, setUpdated] = useState(false);
 
   async function handleSearch(e) {
     e.preventDefault();
@@ -16,6 +17,8 @@ export default function SearchForm() {
     // id, title, comments, status, completed
     const data = await response.json();
     setSearchResults(data);
+    setUpdated(false);
+    setSearchValues({ title: "" });
   }
 
   function handleChange(e) {
@@ -38,20 +41,34 @@ export default function SearchForm() {
           <button type="submit">Search</button>
         </fieldset>
       </form>
-      {searchResults ? <SearchResults results={searchResults} /> : null}
+      {searchResults[0] ? (
+        <SearchResults
+          results={searchResults}
+          updated={updated}
+          setUpdated={setUpdated}
+        />
+      ) : null}
     </>
   );
 }
 
-function SearchResults({ results }) {
+function SearchResults({ results, updated, setUpdated }) {
   const [selectedId, setSelectedId] = useState(0);
+
   function handleChange(e) {
     setSelectedId(e.target.value);
   }
 
   return (
     <>
-      {results ? (
+      {selectedId > 0 ? (
+        <UpdateGameForm
+          sel={selectedId}
+          set={setSelectedId}
+          setUpdate={setUpdated}
+        />
+      ) : null}
+      {results && !updated ? (
         <form id="results">
           {results.map((item) => (
             <fieldset key={item.id}>
@@ -66,7 +83,6 @@ function SearchResults({ results }) {
           ))}
         </form>
       ) : null}
-      <Scrap sel={selectedId} />
     </>
   );
 }

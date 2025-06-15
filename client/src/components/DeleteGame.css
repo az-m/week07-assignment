@@ -1,0 +1,16 @@
+.delete {
+  display: flex;
+  flex-direction: column;
+  justify-self: center;
+  width: 80%;
+  padding: 10px 5px 5px 5px;
+}
+
+.delete button {
+  margin-top: 10px;
+  border: 2px solid #fc2003;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #4d0000;
+  font-size: 1.1rem;
+}

@@ -1,0 +1,17 @@
+.links {
+  display: flex;
+  flex-direction: column;
+  justify-self: center;
+  text-align: center;
+  align-content: center;
+  padding-top: 10dvh;
+}
+
+.links .link {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #0cce2f;
+  text-transform: uppercase;
+  text-decoration: none;
+  margin-bottom: 20px;
+}

@@ -107,12 +107,12 @@ app.put("/updateGameRecord/:id", (req, res) => {
   }
 });
 
-// app.delete("", (req, res) => {
-//   const recordId = req.params.id;
-//   try {
-//     db.query(``, [recordId]);
-//     res.status(200).json({ success: true });
-//   } catch {
-//     res.sendStatus;
-//   }
-// });
+app.delete("/deleteGameRecord/:id", (req, res) => {
+  const recordId = parseInt(req.params.id);
+  try {
+    db.query(`DELETE FROM games WHERE id = $1`, [recordId]);
+    res.status(200).json({ success: true });
+  } catch {
+    res.sendStatus;
+  }
+});

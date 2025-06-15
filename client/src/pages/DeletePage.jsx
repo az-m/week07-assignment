@@ -1,8 +1,7 @@
 import SearchForm from "../components/SearchForm";
 
-export default function UpdatePage() {
-  const mode = "update";
-
+export default function DeletePage() {
+  const mode = "delete";
   return (
     <>
       <SearchForm mode={mode} />

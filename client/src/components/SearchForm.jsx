@@ -1,10 +1,11 @@
 import { useState } from "react";
 import UpdateGameForm from "./UpdateGameForm";
+import DeleteGame from "./DeleteGame";
 import "./SearchForm.css";
 
 const APIroot = import.meta.env.VITE_API_ROOT;
 
-export default function SearchForm() {
+export default function SearchForm({ mode }) {
   const [searchValues, setSearchValues] = useState({ title: "" });
   const [searchResults, setSearchResults] = useState([]);
   const [updated, setUpdated] = useState(false);
@@ -49,13 +50,14 @@ export default function SearchForm() {
           results={searchResults}
           updated={updated}
           setUpdated={setUpdated}
+          mode={mode}
         />
       ) : null}
     </>
   );
 }
 
-function SearchResults({ results, updated, setUpdated }) {
+function SearchResults({ results, updated, setUpdated, mode }) {
   const [selectedId, setSelectedId] = useState(0);
 
   function handleChange(e) {
@@ -64,8 +66,15 @@ function SearchResults({ results, updated, setUpdated }) {
 
   return (
     <>
-      {selectedId > 0 ? (
+      {selectedId > 0 && mode == "update" ? (
         <UpdateGameForm
+          sel={selectedId}
+          set={setSelectedId}
+          setUpdate={setUpdated}
+        />
+      ) : null}
+      {selectedId > 0 && mode == "delete" ? (
+        <DeleteGame
           sel={selectedId}
           set={setSelectedId}
           setUpdate={setUpdated}

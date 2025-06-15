@@ -18,8 +18,8 @@ function App() {
             <NavLink className="link" to="addpage">
               Add
             </NavLink>
-            <NavLink className="link" to="updatepage">
-              Update
+            <NavLink className="link" to="manage">
+              Manage
             </NavLink>
           </nav>
         </header>

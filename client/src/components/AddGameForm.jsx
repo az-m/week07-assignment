@@ -14,6 +14,8 @@ export default function AddGameForm() {
   });
   const [genreValues, setGenreValues] = useState([]);
 
+  // these API calls are to get the values to populate the dropdown lists that refer to other tables
+
   const [statusArr, setStatusArr] = useState([]);
   useEffect(() => {
     async function fetchData() {
@@ -48,6 +50,8 @@ export default function AddGameForm() {
       },
       body: JSON.stringify(formValues),
     });
+
+    // we need to update the junction table too ...
 
     if (response.status === 200) {
       const getLast = await fetch(APIroot + "/getMostRecentGameId");
@@ -112,6 +116,7 @@ export default function AddGameForm() {
           />
           <label htmlFor="platform">Platform/Store</label>
           <select id="platform" name="platform" onChange={handleChange}>
+            {/* these values aren't held in a separate table anywhere so I'll just hard-code them */}
             <option>Steam</option>
             <option>EPIC</option>
             <option>Amazon</option>
@@ -127,7 +132,7 @@ export default function AddGameForm() {
             <select
               id="genres"
               name="genres"
-              defaultValue={genreValues} //default value not value is super important don't forget
+              defaultValue={genreValues} //defaultValue not value is super important don't forget, thanks Manny for spotting
               onChange={handleChangeGenres}
               multiple
             >

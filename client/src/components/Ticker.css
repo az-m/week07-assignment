@@ -1,0 +1,21 @@
+.holder {
+  font-size: 1.5rem;
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  justify-self: center;
+  padding-top: 10dvh;
+}
+
+.spinner {
+  animation-name: progress;
+  animation-duration: 10s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes progress {
+  to {
+    transform: rotate(360deg);
+  }
+}

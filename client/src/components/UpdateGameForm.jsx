@@ -52,6 +52,7 @@ export default function UpdateGameForm({ sel, set, setUpdate }) {
             onChange={handleChange}
             required
           >
+            {/* I know hard-coding them here is lazy, just imagine I pulled them from the db table like i did on the FullList - i was running out of time!  */}
             <option value="1">Completed</option>
             <option value="2">Unplayed</option>
             <option value="3">In Progress</option>

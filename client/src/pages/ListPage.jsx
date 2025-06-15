@@ -1,6 +1,8 @@
 import FullList from "../components/FullList";
 import { useState } from "react";
-export default function Page1() {
+import "./ListPage.css";
+
+export default function ListPage() {
   const [sortOrder, setSortOrder] = useState("ASC");
 
   function handleOrder() {
@@ -13,7 +15,9 @@ export default function Page1() {
 
   return (
     <>
-      <button onClick={handleOrder}>{sortOrder}</button>
+      <div className="buttons">
+        <button onClick={handleOrder}>{sortOrder}</button>
+      </div>
       <FullList sortOrder={sortOrder} />
     </>
   );

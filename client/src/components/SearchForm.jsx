@@ -1,5 +1,6 @@
 import { useState } from "react";
 import UpdateGameForm from "./UpdateGameForm";
+import "./SearchForm.css";
 
 const APIroot = import.meta.env.VITE_API_ROOT;
 
@@ -27,7 +28,7 @@ export default function SearchForm() {
 
   return (
     <>
-      <form id="search" onSubmit={handleSearch}>
+      <form id="search" className="searchform" onSubmit={handleSearch}>
         <fieldset>
           <legend>Search for game</legend>
           <label htmlFor="title">Title</label>
@@ -38,7 +39,9 @@ export default function SearchForm() {
             value={searchValues.title}
             onChange={handleChange}
           />
-          <button type="submit">Search</button>
+          <button id="search" type="submit">
+            Search
+          </button>
         </fieldset>
       </form>
       {searchResults[0] ? (
@@ -69,7 +72,7 @@ function SearchResults({ results, updated, setUpdated }) {
         />
       ) : null}
       {results && !updated ? (
-        <form id="results">
+        <form id="results" className="searchresults">
           {results.map((item) => (
             <fieldset key={item.id}>
               <input

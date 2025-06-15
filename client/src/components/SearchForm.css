@@ -1,8 +1,8 @@
-.addform {
+.searchform {
   padding-top: 10px;
 }
 
-.addform fieldset {
+.searchform fieldset {
   display: flex;
   flex-direction: column;
   justify-self: center;
@@ -11,34 +11,16 @@
   padding: 10px 5px 5px 5px;
 }
 
-.addform legend {
+.searchform legend {
   font-size: 0.8rem;
 }
 
-.addform label,
-input,
-option {
+.searchform label,
+input {
   padding-left: 2px;
 }
 
-.addform textarea {
-  padding: 5px;
-}
-
-.addform select,
-.addform #completed {
-  max-width: 50%;
-}
-
-.addform #genres {
-  min-height: 100px;
-}
-
-.addform #year {
-  max-width: 20%;
-}
-
-.addform #submit {
+.searchform #search {
   margin-top: 10px;
   border: 2px solid #0cce2f;
   border-radius: 5px;
@@ -47,6 +29,19 @@ option {
   font-size: 1.1rem;
 }
 
-.addform #submit:active {
+.searchform #search:active {
   background-color: #000;
+}
+
+.searchresults {
+  padding-top: 10px;
+  padding-left: 2%;
+  padding-right: 2%;
+}
+.searchresults fieldset {
+  padding: 2px 5px 0 5px;
+}
+
+.searchresults label {
+  padding-left: 5px;
 }

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./UpdateGameForm.css";
 
 const APIroot = import.meta.env.VITE_API_ROOT;
 
@@ -32,8 +33,9 @@ export default function UpdateGameForm({ sel, set, setUpdate }) {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="updateform">
         <fieldset>
+          <legend>Update game details</legend>
           <label htmlFor="comments">Comments</label>
           <textarea
             type="textarea"

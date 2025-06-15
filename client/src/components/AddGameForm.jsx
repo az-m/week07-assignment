@@ -97,8 +97,9 @@ export default function AddGameForm() {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="addform">
         <fieldset>
+          <legend>Add game details</legend>
           <label htmlFor="title">Title</label>
           <input
             type="text"

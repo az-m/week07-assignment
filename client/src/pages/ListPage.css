@@ -1,0 +1,15 @@
+.buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding-top: 15px;
+  padding-left: 2%;
+  padding-right: 2%;
+}
+
+.buttons Button {
+  border: 2px solid #0cce2f;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #242424;
+}

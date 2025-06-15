@@ -6,4 +6,43 @@
 
 main {
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  background-color: #242424;
+  color: rgba(255, 255, 255, 0.87);
+  min-height: 100dvh;
+  color-scheme: dark;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+header {
+  text-align: center;
+  padding: 20px 0px 10px 0px;
+  border-bottom: 5px solid #5960e8;
+}
+
+nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  /* grid-template-columns: 1fr 1fr 1fr 1fr; */
+  padding: 20px 0px 0px 0px;
+}
+
+nav .link {
+  font-weight: 600;
+  color: #0cce2f;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+@media (min-width: 800px) {
+  nav .link {
+    font-size: 1.2rem;
+  }
+}
+
+@media (hover: hover) {
+  nav .link:hover {
+    color: #9af8ab;
+  }
 }

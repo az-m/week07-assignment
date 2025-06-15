@@ -1,8 +1,8 @@
-.addform {
+.updateform {
   padding-top: 10px;
 }
 
-.addform fieldset {
+.updateform fieldset {
   display: flex;
   flex-direction: column;
   justify-self: center;
@@ -11,34 +11,24 @@
   padding: 10px 5px 5px 5px;
 }
 
-.addform legend {
+.updateform legend {
   font-size: 0.8rem;
 }
 
-.addform label,
-input,
-option {
+.updateform label {
   padding-left: 2px;
 }
 
-.addform textarea {
+.updateform textarea {
   padding: 5px;
 }
 
-.addform select,
-.addform #completed {
+.updateform select,
+.updateform #completed {
   max-width: 50%;
 }
 
-.addform #genres {
-  min-height: 100px;
-}
-
-.addform #year {
-  max-width: 20%;
-}
-
-.addform #submit {
+.updateform #submit {
   margin-top: 10px;
   border: 2px solid #0cce2f;
   border-radius: 5px;
@@ -47,6 +37,6 @@ option {
   font-size: 1.1rem;
 }
 
-.addform #submit:active {
+.updateform #submit:active {
   background-color: #000;
 }

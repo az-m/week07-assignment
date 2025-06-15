@@ -1,6 +1,6 @@
 import SearchForm from "../components/SearchForm";
 
-export default function Page3() {
+export default function UpdatePage() {
   return (
     <>
       <SearchForm />

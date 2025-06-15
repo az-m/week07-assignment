@@ -23,26 +23,28 @@ export default function FullList({ sortOrder }) {
 
   return (
     <>
-      <p className="fullListTitles">
-        <span>Title</span>
-        <span>Platform</span>
-        <span>Year</span>
-        <span>Comments</span>
-        <span>Status</span>
-        <span>Completed</span>
-        <span>Genres</span>
-      </p>
-      {items.map((item) => (
-        <p key={item.id} className="listItem">
-          <span>{item.title}</span>
-          <span>{item.platform}</span>
-          <span>{item.year}</span>
-          <span>{item.comments}</span>
-          <span>{item.status}</span>
-          <span>{parseDate(item.completed)}</span>
-          <span>{concatArr(item.genres)}</span>
+      <div className="listWrap">
+        <p className="fullListTitles">
+          <span>Title</span>
+          <span>Platform</span>
+          <span>Year</span>
+          <span>Comments</span>
+          <span>Status</span>
+          <span>Completed</span>
+          <span>Genres</span>
         </p>
-      ))}
+        {items.map((item) => (
+          <p key={item.id} className="listItem">
+            <span>{item.title}</span>
+            <span>{item.platform}</span>
+            <span>{item.year}</span>
+            <span>{item.comments}</span>
+            <span>{item.status}</span>
+            <span>{parseDate(item.completed)}</span>
+            <span>{concatArr(item.genres)}</span>
+          </p>
+        ))}
+      </div>
     </>
   );
 }

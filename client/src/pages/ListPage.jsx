@@ -4,6 +4,7 @@ import "./ListPage.css";
 
 export default function ListPage() {
   const [sortOrder, setSortOrder] = useState("ASC");
+  const [sortField, setSortField] = useState("games.title");
 
   function handleOrder() {
     if (sortOrder === "ASC") {
@@ -13,12 +14,22 @@ export default function ListPage() {
     }
   }
 
+  function handleField(e) {
+    setSortField(e.target.value);
+  }
+
   return (
     <>
       <div className="buttons">
+        <button onClick={handleField} value={"games.title"}>
+          Title
+        </button>
+        <button onClick={handleField} value={"status.status"}>
+          Status
+        </button>
         <button onClick={handleOrder}>{sortOrder}</button>
       </div>
-      <FullList sortOrder={sortOrder} />
+      <FullList sortOrder={sortOrder} sortField={sortField} />
     </>
   );
 }

@@ -14,3 +14,6 @@
   background-color: #4d0000;
   font-size: 1.1rem;
 }
+.delete button:active {
+  background-color: #ff0000;
+}

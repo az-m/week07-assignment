@@ -3,7 +3,7 @@ export default function HomePage() {
     <>
       <p
         style={{
-          paddingTop: "50px",
+          padding: "50px 10px 0px 10px",
           textAlign: "center",
           fontSize: "1.5rem",
         }}

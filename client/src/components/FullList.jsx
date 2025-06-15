@@ -3,13 +3,13 @@ import "./FullList.css";
 
 const APIroot = import.meta.env.VITE_API_ROOT;
 
-export default function FullList({ sortOrder }) {
+export default function FullList({ sortField, sortOrder }) {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
       const response = await fetch(
-        `${APIroot}/getGames?sortOrder=${sortOrder}`
+        `${APIroot}/getGames?sortField=${sortField}&sortOrder=${sortOrder}`
       );
       // id, title, platform, year (int), comments, status, completed (date), genres (arr)
       const data = await response.json();
@@ -17,9 +17,9 @@ export default function FullList({ sortOrder }) {
     }
     fetchData();
 
-    // const intervalId = setInterval(fetchData, 5000);
-    // return () => clearInterval(intervalId);
-  }, [sortOrder]);
+    const intervalId = setInterval(fetchData, 5000);
+    return () => clearInterval(intervalId);
+  }, [sortField, sortOrder]);
 
   return (
     <>
